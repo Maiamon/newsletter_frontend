@@ -9,7 +9,6 @@ import { NewsPagination } from "@/components/ui/news-pagination";
 import { NewsCardSkeleton } from "@/components/ui/news-card-skeleton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
-import { LogoutButton } from "@/components/ui/logout-button";
 
 export function Dashboard() {
   // Usando hooks para definir título e meta tags
@@ -57,14 +56,11 @@ export function Dashboard() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="mb-8 flex justify-between items-start">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight mb-2">Newsletter Dashboard</h1>
-          <p className="text-muted-foreground">
-            Acompanhe as últimas notícias e mantenha-se informado
-          </p>
-        </div>
-        <LogoutButton />
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold tracking-tight mb-2">Últimas Notícias</h1>
+        <p className="text-muted-foreground">
+          Acompanhe as últimas notícias e mantenha-se informado sobre os assuntos mais relevantes
+        </p>
       </div>
 
       <div className="mb-6">

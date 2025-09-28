@@ -162,20 +162,17 @@ interface HeadProps {
 export const Head: React.FC<HeadProps> = ({ title, meta = [], links = [], children }) => {
   const { setTitle, setMeta, setLink } = useDocumentHead();
 
-  const stableMeta = useMemo(() => meta, [JSON.stringify(meta)]);
-  const stableLinks = useMemo(() => links, [JSON.stringify(links)]);
-
   useEffect(() => {
     if (title) setTitle(title);
   }, [title, setTitle]);
 
   useEffect(() => {
-    if (stableMeta.length > 0) setMeta(stableMeta);
-  }, [stableMeta, setMeta]);
+    if (meta.length > 0) setMeta(meta);
+  }, [meta, setMeta]);
 
   useEffect(() => {
-    if (stableLinks.length > 0) setLink(stableLinks);
-  }, [stableLinks, setLink]);
+    if (links.length > 0) setLink(links);
+  }, [links, setLink]);
 
   return <>{children}</>;
 };
