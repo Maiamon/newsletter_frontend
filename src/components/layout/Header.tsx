@@ -19,6 +19,8 @@ export function Header() {
       if (authenticated) {
         const userData = AuthService.getUser();
         setUser(userData);
+      } else {
+        setUser(null);
       }
     };
 
@@ -30,15 +32,21 @@ export function Header() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo e Nome */}
         <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2">
-            <div className="flex items-center justify-center w-8 h-8 rounded-md bg-primary text-primary-foreground">
-              <Newspaper className="h-4 w-4" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-lg font-semibold tracking-tight">Newsletter</span>
-              <span className="text-xs text-muted-foreground">Dashboard</span>
-            </div>
-          </div>
+          <Button 
+            variant="ghost" 
+            className="flex items-center gap-2 hover:bg-accent hover:text-accent-foreground p-2 h-auto"
+            asChild
+          >
+            <a href="/dashboard">
+              <div className="flex items-center justify-center w-8 h-8 rounded-md bg-primary text-primary-foreground">
+                <Newspaper className="h-4 w-4" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-lg font-semibold tracking-tight">Newsletter</span>
+                <span className="text-xs text-muted-foreground">Dashboard</span>
+              </div>
+            </a>
+          </Button>
           
           {/* Navegação principal */}
           {isAuthenticated && <MainNavigation />}
@@ -46,33 +54,22 @@ export function Header() {
 
         {/* Informações do usuário e ações */}
         <div className="flex items-center gap-4">
-          {isAuthenticated && user && (
+          {isAuthenticated && (
             <>
-              <div className="hidden sm:flex items-center gap-2 text-sm">
-                <User className="h-4 w-4 text-muted-foreground" />
-                <div className="flex flex-col">
-                  <span className="font-medium">{user.name}</span>
-                  <span className="text-xs text-muted-foreground">{user.email}</span>
+              {user && (
+                <div className="hidden sm:flex items-center gap-2 text-sm">
+                  <User className="h-4 w-4 text-muted-foreground" />
+                  <div className="flex flex-col">
+                    <span className="font-medium">{user.name}</span>
+                    <span className="text-xs text-muted-foreground">{user.email}</span>
+                  </div>
                 </div>
-              </div>
+              )}
               
               <Separator orientation="vertical" className="h-6 hidden sm:block" />
               
-              <div className="hidden md:block">
-                <LogoutButton />
-              </div>
+              <LogoutButton />
             </>
-          )}
-          
-          {!isAuthenticated && (
-            <div className="hidden md:flex items-center gap-2">
-              <Button variant="ghost" size="sm" asChild>
-                <a href="/sign-in">Entrar</a>
-              </Button>
-              <Button size="sm" asChild>
-                <a href="/sign-up">Cadastrar</a>
-              </Button>
-            </div>
           )}
           
           {/* Menu Mobile */}

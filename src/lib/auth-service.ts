@@ -22,16 +22,9 @@ export class AuthService {
     }
 
     try {
-      // Tenta verificar o token fazendo uma requisição que requer autenticação
-      // Se não houver rota específica, pode usar uma rota existente como /news
-      await api.get('/auth/verify').catch(async (error) => {
-        // Se a rota /auth/verify não existir (404), tenta com /news
-        if (error?.response?.status === 404) {
-          await api.get('/news', { params: { page: 1, limit: 1 } });
-        } else {
-          throw error;
-        }
-      });
+      // Verifica o token fazendo uma requisição simples para /news
+      // Como todas as rotas de notícias são protegidas, isso serve como verificação
+      await api.get('/news', { params: { page: 1, limit: 1 } });
       
       console.log('✅ Auth - Token válido');
       return true;
@@ -97,15 +90,8 @@ export class AuthService {
    * Faz logout completo
    */
   static async logout(): Promise<void> {
-    try {
-      // Opcional: chamar endpoint de logout no backend
-      await api.post('/auth/logout');
-    } catch (error) {
-      console.log('⚠️ Auth - Erro ao fazer logout no servidor:', error);
-    } finally {
-      this.clearAuth();
-      console.log('🚪 Auth - Logout realizado');
-    }
+    this.clearAuth();
+    console.log('🚪 Auth - Logout realizado');
   }
 
   /**

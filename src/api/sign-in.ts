@@ -15,7 +15,7 @@ export interface SignInResponse {
 }
 
 export async function signIn({ email, password }: SignInBody) {
-  const response = await api.post<SignInResponse>('/login', { email, password });
+  const response = await api.post<SignInResponse>('/auth/login', { email, password });
   
   return response.data;
 }

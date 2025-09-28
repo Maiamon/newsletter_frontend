@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useQuery } from "@tanstack/react-query";
+import { getCategories } from "@/api/categories";
 
 interface NewsFiltersProps {
   category?: string;
@@ -10,16 +13,10 @@ interface NewsFiltersProps {
   onClearFilters: () => void;
 }
 
-const categories = [
-  { value: 'tecnologia', label: 'Tecnologia' },
-  { value: 'saude', label: 'Saúde' },
-  { value: 'educacao', label: 'Educação' }
-];
-
 const periods = [
-  { value: 'day', label: 'Hoje' },
-  { value: 'week', label: 'Esta semana' },
-  { value: 'month', label: 'Este mês' }
+  { value: 'day', label: 'Últimas 24 horas' },
+  { value: 'week', label: 'Últimos 7 dias' },
+  { value: 'month', label: 'Últimos 30 dias' }
 ];
 
 export function NewsFilters({ 
@@ -29,24 +26,42 @@ export function NewsFilters({
   onPeriodChange, 
   onClearFilters 
 }: NewsFiltersProps) {
+  // Buscar categorias do backend
+  const { data: categories, isLoading: categoriesLoading, error: categoriesError } = useQuery({
+    queryKey: ['categories'],
+    queryFn: getCategories,
+    retry: 2,
+    initialData: [], // Sempre iniciar com array vazio
+  });
+
   return (
     <div className="flex flex-col sm:flex-row gap-4 p-4 bg-muted/50 rounded-lg">
       <div className="flex-1">
         <Label htmlFor="category-select" className="text-sm font-medium">
           Categoria
         </Label>
-        <Select value={category} onValueChange={onCategoryChange}>
-          <SelectTrigger id="category-select">
-            <SelectValue placeholder="Todas as categorias" />
-          </SelectTrigger>
-          <SelectContent>
-            {categories.map((cat) => (
-              <SelectItem key={cat.value} value={cat.value}>
-                {cat.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        {categoriesLoading ? (
+          <Skeleton className="h-10 w-full" />
+        ) : categoriesError ? (
+          <Select disabled>
+            <SelectTrigger id="category-select" className="text-muted-foreground">
+              <SelectValue placeholder="Erro ao carregar categorias" />
+            </SelectTrigger>
+          </Select>
+        ) : (
+          <Select value={category} onValueChange={onCategoryChange}>
+            <SelectTrigger id="category-select">
+              <SelectValue placeholder="Todas as categorias" />
+            </SelectTrigger>
+            <SelectContent>
+              {Array.isArray(categories) && categories.map((cat) => (
+                <SelectItem key={cat.id} value={cat.name.toLowerCase()}>
+                  {cat.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
       </div>
 
       <div className="flex-1">

@@ -13,7 +13,7 @@ export interface SignUpResponse {
 }
 
 export async function signUp({ name, email, password }: SignUpBody) {
-  const response = await api.post<SignUpResponse>('/users', { name, email, password });
+  const response = await api.post<SignUpResponse>('/auth/register', { name, email, password });
   
   return response.data;
 }
