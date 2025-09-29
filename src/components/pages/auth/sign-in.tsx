@@ -63,8 +63,8 @@ export function SignIn() {
       />
       <div className="p-8">
         <Button asChild variant="ghost" className="absolute right-8 top-8">
-          <Link to="/sign-up" className="text-sm text-muted-foreground hover:text-blue-600 transition-colors">
-            Não tem conta? <span className="text-blue-600 underline">Crie uma agora</span>
+          <Link to="/sign-up" className="text-sm text-gray-600 hover:text-transparent hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 hover:bg-clip-text transition-all duration-300">
+            Não tem conta? <span className="text-blue-600 underline hover:text-purple-600 transition-colors">Crie uma agora</span>
           </Link>
         </Button>
 
