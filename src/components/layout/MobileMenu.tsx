@@ -72,7 +72,7 @@ export function MobileMenu({ isAuthenticated, user }: MobileMenuProps) {
           </Button>
         </div>
         
-        <div className="p-4 space-y-4">
+        <div className="p-4 space-y-4 bg-gradient-to-b from-blue-50 to-indigo-50">
           {isAuthenticated && user && (
             <>
               <div className="flex items-center gap-3 p-4 rounded-lg bg-gray-50 border border-gray-200 shadow-md">
@@ -97,6 +97,17 @@ export function MobileMenu({ isAuthenticated, user }: MobileMenuProps) {
                     <Newspaper className="h-4 w-4" />
                   </div>
                   <span className="font-medium">Dashboard</span>
+                </a>
+                
+                <a 
+                  href="/profile" 
+                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 hover:shadow-md transition-all duration-300 text-gray-700 hover:text-gray-900 border border-transparent hover:border-gray-300"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-r from-purple-400 to-pink-400 text-white">
+                    <User className="h-4 w-4" />
+                  </div>
+                  <span className="font-medium">Perfil</span>
                 </a>
               </nav>
               

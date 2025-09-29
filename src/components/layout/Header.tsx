@@ -1,15 +1,16 @@
 import { Button } from "@/components/ui/button";
-import { LogoutButton } from "@/components/ui/logout-button";
-import { Separator } from "@/components/ui/separator";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { MainNavigation } from "./MainNavigation";
 import { MobileMenu } from "./MobileMenu";
-import { Newspaper, User } from "lucide-react";
+import { Newspaper, User, Settings, ChevronDown, LogOut } from "lucide-react";
 import { AuthService } from "@/lib/auth-service";
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router";
 
 export function Header() {
   const [user, setUser] = useState<{ name: string; email: string } | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -26,6 +27,11 @@ export function Header() {
 
     checkAuth();
   }, []);
+
+  const handleLogout = async () => {
+    await AuthService.logout();
+    navigate('/sign-in');
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-gradient-to-r from-blue-50/95 via-indigo-50/95 to-purple-50/95 backdrop-blur supports-[backdrop-filter]:bg-gradient-to-r supports-[backdrop-filter]:from-blue-50/80 supports-[backdrop-filter]:via-indigo-50/80 supports-[backdrop-filter]:to-purple-50/80 border-white/20 shadow-lg">
@@ -57,20 +63,46 @@ export function Header() {
           {isAuthenticated && (
             <>
               {user && (
-                <div className="hidden sm:flex items-center gap-3 text-sm bg-white/30 p-3 rounded-lg backdrop-blur-sm border border-white/20">
-                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 text-white">
-                    <User className="h-5 w-5" />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="font-semibold text-gray-800">{user.name}</span>
-                    <span className="text-xs text-gray-600">{user.email}</span>
-                  </div>
-                </div>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button 
+                      variant="ghost" 
+                      className="hidden sm:flex items-center gap-3 text-sm bg-white/30 p-3 rounded-lg backdrop-blur-sm border border-white/20 hover:bg-white/40 transition-all duration-300"
+                    >
+                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 text-white">
+                        <User className="h-5 w-5" />
+                      </div>
+                      <div className="flex flex-col text-left">
+                        <span className="font-semibold text-gray-800">{user.name}</span>
+                        <span className="text-xs text-gray-600">{user.email}</span>
+                      </div>
+                      <ChevronDown className="h-4 w-4 text-gray-500" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  
+                  <DropdownMenuContent 
+                    align="end" 
+                    className="w-56 bg-white/95 backdrop-blur-sm border-white/30"
+                  >
+                    <DropdownMenuItem asChild>
+                      <Link to="/profile" className="flex items-center gap-2 cursor-pointer">
+                        <Settings className="h-4 w-4" />
+                        Perfil
+                      </Link>
+                    </DropdownMenuItem>
+                    
+                    <DropdownMenuSeparator />
+                    
+                    <DropdownMenuItem 
+                      onClick={handleLogout}
+                      className="flex items-center gap-2 cursor-pointer text-red-600 focus:text-red-700"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      Sair
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               )}
-              
-              <Separator orientation="vertical" className="h-8 hidden sm:block border-white/30" />
-              
-              <LogoutButton />
             </>
           )}
           

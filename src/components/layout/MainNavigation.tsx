@@ -20,20 +20,20 @@ const components = [
   },
   {
     title: "Tendências",
-    href: "/trending",
+    href: "/dashboard",
     description: "Acompanhe as notícias mais populares e comentadas",
     icon: <TrendingUp className="h-4 w-4" />,
   },
   {
     title: "Arquivo",
-    href: "/archive",
+    href: "/dashboard",
     description: "Acesse notícias antigas organizadas por data",
     icon: <Calendar className="h-4 w-4" />,
   },
   {
-    title: "Configurações",
-    href: "/settings",
-    description: "Personalize suas preferências de notícias",
+    title: "Perfil",
+    href: "/profile",
+    description: "Gerencie suas informações pessoais e preferências",
     icon: <Settings className="h-4 w-4" />,
   },
 ];
@@ -76,7 +76,7 @@ export function MainNavigation() {
     <NavigationMenu className="hidden md:flex">
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="bg-white/30 backdrop-blur-sm border border-white/20 text-gray-700 hover:bg-white/50 hover:text-gray-800 data-[state=open]:bg-white/50 data-[state=open]:text-gray-800 transition-all duration-300 shadow-md">
+          <NavigationMenuTrigger className="bg-white/30 backdrop-blur-sm border border-white/20 text-gray-700 hover:bg-gradient-to-r hover:from-blue-100 hover:to-purple-100 hover:text-blue-700 data-[state=open]:bg-gradient-to-r data-[state=open]:from-blue-100 data-[state=open]:to-purple-100 data-[state=open]:text-blue-700 transition-all duration-300 shadow-md">
             Navegação
           </NavigationMenuTrigger>
           <NavigationMenuContent className="bg-white/95 backdrop-blur-md border border-white/20 shadow-xl">

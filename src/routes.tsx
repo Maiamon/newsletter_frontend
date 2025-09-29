@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import { SignIn } from "./components/pages/auth/sign-in";
 import { Dashboard } from "./components/pages/app/Dashboard";
+import { Profile } from "./components/pages/app/Profile";
 import { AppLayout } from "./components/pages/_layout/app";
 import { AuthLayout } from "./components/pages/_layout/auth";
 import { SignUp } from "./components/pages/auth/sign-up";
@@ -27,6 +28,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Dashboard />
+          </ProtectedRoute>
+        ) 
+      },
+      { 
+        path: "/profile", 
+        element: (
+          <ProtectedRoute>
+            <Profile />
           </ProtectedRoute>
         ) 
       }
