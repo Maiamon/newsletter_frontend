@@ -113,17 +113,20 @@ export function Dashboard() {
         </div>
       ) : data?.news && data.news.length > 0 ? (
         <>
+
           <div className="bg-white/30 rounded-xl border border-white/20 shadow-lg backdrop-blur-sm overflow-hidden mb-8">
             {data.news.map((news, index) => (
               <NewsCardAlternate key={news.id} news={news} index={index} />
             ))}
           </div>
 
-          <NewsPagination
-            currentPage={data.currentPage}
-            totalPages={data.totalPages}
-            onPageChange={handlePageChange}
-          />
+          {data.totalPages > 1 && (
+            <NewsPagination
+              currentPage={data.currentPage}
+              totalPages={data.totalPages}
+              onPageChange={handlePageChange}
+            />
+          )}
         </>
       ) : (
         <div className="text-center py-12">

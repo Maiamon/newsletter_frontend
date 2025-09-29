@@ -71,15 +71,18 @@ export function SignUp() {
       />
       <div className="p-8">
         <Button asChild variant="ghost" className="absolute right-8 top-8">
-          <Link to="/sign-in" className="text-sm text-muted-foreground">
-            Já tem conta? <span className="text-primary underline">Fazer login</span>
+          <Link to="/sign-in" className="text-sm text-muted-foreground hover:text-blue-600 transition-colors">
+            Já tem conta? <span className="text-blue-600 underline">Fazer login</span>
           </Link>
         </Button>
 
-        <div className="w-[350px] flex flex-col justify-center gap-6">
+        <div className="w-full max-w-md bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-white/30 p-8">
+          <div className="w-[350px] mx-auto flex flex-col justify-center gap-6">
           <div className="flex flex-col gap-2 text-center">
-            <h1 className="text-2xl font-semibold tracking-tight">Criar Conta</h1>
-            <p className="text-sm text-muted-foreground">Comece a receber nossas novidades.</p>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              Criar Conta
+            </h1>
+            <p className="text-sm text-gray-600">Comece a receber nossas novidades.</p>
           </div>
 
           <form onSubmit={handleSubmit(handleSignUp)} className="space-y-4"> 
@@ -135,10 +138,11 @@ export function SignUp() {
               )}
             </div>
 
-            <Button disabled={isSubmitting} className="w-full" type="submit">
+            <Button disabled={isSubmitting} className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white" type="submit">
               {isSubmitting ? 'Criando conta...' : 'Criar Conta'}
             </Button>
           </form>
+          </div>
         </div>
       </div>
     </>

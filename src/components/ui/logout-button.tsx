@@ -25,7 +25,7 @@ export function LogoutButton() {
       variant="outline" 
       size="sm" 
       onClick={handleLogout}
-      className="gap-2"
+      className="gap-2 bg-white/30 backdrop-blur-sm border-white/30 text-gray-700 hover:bg-gradient-to-r hover:from-red-500 hover:to-pink-500 hover:text-white hover:border-transparent transition-all duration-300 shadow-md"
     >
       <LogOut className="h-4 w-4" />
       Sair

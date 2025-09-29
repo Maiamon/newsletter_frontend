@@ -22,31 +22,49 @@ export interface SearchNewsParams {
 
 export interface NewsResponse {
   news: News[];
+  pagination: {
+    currentPage: number;
+    totalPages: number;
+    totalCount: number;
+    limit: number;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  };
+}
+
+// Interface para compatibilidade com o frontend
+export interface NewsResponseFormatted {
+  news: News[];
   totalPages: number;
   totalItems: number;
   currentPage: number;
 }
 
-export async function getNews(params: SearchNewsParams): Promise<NewsResponse> {
-  console.log('🚀 GetNews - Buscando notícias com parâmetros:', params);
+export async function getNews(params: SearchNewsParams): Promise<NewsResponseFormatted> {
   
   try {
     const response = await api.get<NewsResponse>('/news', { params });
     
     console.log('✅ GetNews - Resposta recebida:', {
-      total: response.data.totalItems,
-      pages: response.data.totalPages,
-      current: response.data.currentPage,
+      total: response.data.pagination.totalCount,
+      pages: response.data.pagination.totalPages,
+      current: response.data.pagination.currentPage,
       newsCount: response.data.news.length
     });
     
     // Converte as datas de string para Date
-    response.data.news = response.data.news.map(item => ({
+    const newsWithDates = response.data.news.map(item => ({
       ...item,
       publishedAt: new Date(item.publishedAt)
     }));
     
-    return response.data;
+    // Mapeia para o formato esperado pelo frontend
+    return {
+      news: newsWithDates,
+      totalPages: response.data.pagination.totalPages,
+      totalItems: response.data.pagination.totalCount,
+      currentPage: response.data.pagination.currentPage,
+    };
   } catch (error) {
     console.error('❌ GetNews - Erro na requisição:', error);
     throw error;

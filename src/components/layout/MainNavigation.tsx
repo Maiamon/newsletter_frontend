@@ -53,7 +53,7 @@ const ListItem = ({ className, title, href, children, icon, ...props }: ListItem
         <a
           href={href}
           className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            "block select-none space-y-2 rounded-lg p-4 leading-none no-underline outline-none transition-all duration-300 hover:bg-gradient-to-r hover:from-blue-100 hover:to-purple-100 hover:shadow-md focus:bg-gradient-to-r focus:from-blue-100 focus:to-purple-100 border border-transparent hover:border-white/30 group",
             className
           )}
           {...props}
@@ -62,7 +62,7 @@ const ListItem = ({ className, title, href, children, icon, ...props }: ListItem
             {icon}
             <div className="text-sm font-medium leading-none">{title}</div>
           </div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+          <p className="line-clamp-2 text-sm leading-snug text-gray-600 ml-11">
             {children}
           </p>
         </a>
@@ -76,8 +76,10 @@ export function MainNavigation() {
     <NavigationMenu className="hidden md:flex">
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Navegação</NavigationMenuTrigger>
-          <NavigationMenuContent>
+          <NavigationMenuTrigger className="bg-white/30 backdrop-blur-sm border border-white/20 text-gray-700 hover:bg-white/50 hover:text-gray-800 data-[state=open]:bg-white/50 data-[state=open]:text-gray-800 transition-all duration-300 shadow-md">
+            Navegação
+          </NavigationMenuTrigger>
+          <NavigationMenuContent className="bg-white/95 backdrop-blur-md border border-white/20 shadow-xl">
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
               {components.map((component) => (
                 <ListItem

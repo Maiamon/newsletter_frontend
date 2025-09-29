@@ -22,7 +22,11 @@ export function NewsCardAlternate({ news, index }: NewsCardAlternateProps) {
     if (news.summary) {
       return news.summary.length > 200 ? news.summary.substring(0, 200) + '...' : news.summary;
     }
-    return news.content?.substring(0, 200) + '...';
+    // Se não há summary, usa o conteúdo truncado apenas se necessário
+    if (news.content && news.content.length > 200) {
+      return news.content.substring(0, 200) + '...';
+    }
+    return news.content || '';
   };
 
   const hasMoreContent = () => {

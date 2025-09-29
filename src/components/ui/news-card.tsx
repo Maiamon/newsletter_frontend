@@ -22,9 +22,10 @@ export function NewsCard({ news }: NewsCardProps) {
       return news.summary;
     }
     // Se não há resumo, mostra os primeiros 150 caracteres do conteúdo
-    return news.content.length > 150 
-      ? news.content.substring(0, 150) + '...'
-      : news.content;
+    if (news.content.length > 200) {
+      return news.content.substring(0, 200) + '...';
+    }
+    return news.content;
   };
 
   return (

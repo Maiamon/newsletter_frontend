@@ -18,7 +18,17 @@
  * GET /news
  * - Buscar notícias (requer autenticação)
  * - Query params: { page: number, limit: number, period?: 'day'|'week'|'month', category?: string }
- * - Response: { news: News[], totalPages: number, totalItems: number, currentPage: number }
+ * - Response: { 
+ *     news: News[], 
+ *     pagination: {
+ *       currentPage: number,
+ *       totalPages: number,
+ *       totalCount: number,
+ *       limit: number,
+ *       hasNextPage: boolean,
+ *       hasPreviousPage: boolean
+ *     }
+ *   }
  * 
  * PERÍODOS (baseado em "últimos X dias"):
  * - 'day': últimas 24 horas (desde agora - 24h)
@@ -149,8 +159,13 @@
  * 
  * interface NewsResponse {
  *   news: News[];
- *   totalPages: number;
- *   totalItems: number;
- *   currentPage: number;
+ *   pagination: {
+ *     currentPage: number;
+ *     totalPages: number;
+ *     totalCount: number;
+ *     limit: number;
+ *     hasNextPage: boolean;
+ *     hasPreviousPage: boolean;
+ *   };
  * }
  */
