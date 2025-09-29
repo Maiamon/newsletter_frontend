@@ -3,10 +3,9 @@ import { useQuery } from "@tanstack/react-query";
 import { useDocumentTitle, useDocumentMeta } from "../../../lib/document-head";
 import { getNews } from "@/api/news";
 import type { SearchNewsParams } from "@/api/news";
-import { NewsCard } from "@/components/ui/news-card";
+import { NewsCardAlternate } from "@/components/ui/news-card-alternate";
 import { NewsFilters } from "@/components/ui/news-filters";
 import { NewsPagination } from "@/components/ui/news-pagination";
-import { NewsCardSkeleton } from "@/components/ui/news-card-skeleton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 
@@ -55,23 +54,26 @@ export function Dashboard() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight mb-2">Últimas Notícias</h1>
-        <p className="text-muted-foreground">
-          Acompanhe as últimas notícias e mantenha-se informado sobre os assuntos mais relevantes
-        </p>
-      </div>
-
-      <div className="mb-6">
-        <NewsFilters
-          category={filters.category}
-          period={filters.period}
-          onCategoryChange={handleCategoryChange}
-          onPeriodChange={handlePeriodChange}
-          onClearFilters={handleClearFilters}
-        />
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="container mx-auto px-4 py-8">
+        <div className="mb-8 bg-white/70 backdrop-blur-sm rounded-xl border border-white/20 shadow-lg overflow-hidden">
+          <div className="p-6 pb-0">
+            <h1 className="text-3xl font-bold tracking-tight mb-2 text-gray-800">
+              Últimas Notícias
+            </h1>
+            <p className="text-gray-600 mb-6">
+              Acompanhe as últimas notícias e mantenha-se informado sobre os assuntos mais relevantes
+            </p>
+          </div>
+          
+          <NewsFilters
+            category={filters.category}
+            period={filters.period}
+            onCategoryChange={handleCategoryChange}
+            onPeriodChange={handlePeriodChange}
+            onClearFilters={handleClearFilters}
+          />
+        </div>
 
       {error && (
         <div className="mb-6">
@@ -85,21 +87,35 @@ export function Dashboard() {
       )}
 
       {isLoading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {Array.from({ length: 9 }).map((_, index) => (
-            <NewsCardSkeleton key={index} />
+        <div className="bg-white/30 rounded-xl border border-white/20 shadow-lg backdrop-blur-sm overflow-hidden mb-8">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <div key={index} className={`p-8 border-b border-gray-200 ${
+              index % 2 === 0 ? 'bg-gradient-to-r from-white to-blue-50/30' : 'bg-gradient-to-r from-purple-50/30 to-white'
+            }`}>
+              <div className="flex flex-col lg:flex-row gap-8">
+                <div className="flex-1 space-y-4">
+                  <div className="h-6 bg-gray-200 rounded animate-pulse w-20"></div>
+                  <div className="h-8 bg-gray-200 rounded animate-pulse"></div>
+                  <div className="h-4 bg-gray-200 rounded animate-pulse w-32"></div>
+                </div>
+                <div className="flex-1 space-y-4">
+                  <div className="p-6 rounded-xl bg-gray-100 animate-pulse">
+                    <div className="space-y-2">
+                      <div className="h-4 bg-gray-200 rounded"></div>
+                      <div className="h-4 bg-gray-200 rounded"></div>
+                      <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       ) : data?.news && data.news.length > 0 ? (
         <>
-          <div className="mb-4 text-sm text-muted-foreground">
-            {data.totalItems} {data.totalItems === 1 ? 'notícia encontrada' : 'notícias encontradas'}
-            {(filters.category || filters.period) && ' com os filtros selecionados'}
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {data.news.map((news) => (
-              <NewsCard key={news.id} news={news} />
+          <div className="bg-white/30 rounded-xl border border-white/20 shadow-lg backdrop-blur-sm overflow-hidden mb-8">
+            {data.news.map((news, index) => (
+              <NewsCardAlternate key={news.id} news={news} index={index} />
             ))}
           </div>
 
@@ -116,6 +132,7 @@ export function Dashboard() {
           </p>
         </div>
       )}
+      </div>
     </div>
   );
 }
